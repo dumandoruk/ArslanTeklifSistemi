@@ -2,7 +2,7 @@
 
 Bu proje, Arslan Elektromarket için geliştirilmiş, WooCommerce API'si ile entegre, anlık kur takibi yapabilen ve tek tıkla A4 formatında teklif dökümanı üreten .NET 10 tabanlı bir full-stack otomasyon sistemidir.
 
-![Teklif Formu Ekran Görüntüsü](assets/arslan-teklif-sistem.png)
+![Teklif Formu Ekran Görüntüsü](./assets/arslan-teklif-sistem.png)
 
 ## 🛠️ Teknik Özellikler / Technical Features
 
