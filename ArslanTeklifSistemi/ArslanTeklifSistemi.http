@@ -1,0 +1,7 @@
+### Canlı Kurları Test Et
+GET {{ArslanTeklifSistemi_HostAddress}}/api/offer/rates
+Accept: application/json
+
+### Ürün Detayını Test Et
+GET {{ArslanTeklifSistemi_HostAddress}}/api/offer/product/108125
+Accept: application/json

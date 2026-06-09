@@ -1,0 +1,681 @@
+﻿<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arslan Elektromarket - Kurumsal Teklif Formu</title>
+    <style>
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #cbd5e1;
+            margin: 0;
+            padding: 40px 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* A4 Format Kilidi */
+        .a4-page {
+            width: 210mm;
+            min-height: 297mm;
+            padding: 15mm;
+            margin: 0 auto;
+            background-color: #ffffff;
+            box-shadow: 0 0 20px rgba(0,0,0,0.2);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .page-content {
+            flex-grow: 1;
+        }
+
+        /* Logo ve Başlık Alanı */
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 4px solid #2a4d69;
+            padding-bottom: 12px;
+            margin-bottom: 20px;
+        }
+
+        .logo-area {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo-img {
+            text-align:left;
+            max-height: 120px;
+            max-width: 400px;
+            object-fit: contain;
+            margin-bottom: 8px;
+        }
+
+        .company-slogan {
+            font-size: 9.5pt;
+            color: #475569;
+            font-weight: 600;
+        }
+
+        .title-area {
+            text-align: right;
+        }
+
+        .form-title {
+            font-weight: 800;
+            font-size: 16pt;
+            color: #2a4d69;
+            letter-spacing: 0.5px;
+            margin: 0;
+        }
+
+        .form-date {
+            font-size: 10pt;
+            font-weight: 600;
+            color: #475569;
+            margin-top: 4px;
+        }
+
+        /* Meta Alanları */
+        .meta-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+            background-color: #f8fafc;
+            padding: 12px;
+            border: 1px solid #e2e8f0;
+            border-radius: 4px;
+        }
+
+        .meta-item {
+            display: flex;
+            font-size: 10pt;
+            margin-bottom: 6px;
+            align-items: center;
+        }
+
+        .meta-label {
+            font-weight: bold;
+            width: 110px;
+            color: #475569;
+        }
+
+        .meta-input {
+            border: 1px solid #cbd5e1;
+            padding: 5px 8px;
+            font-size: 10pt;
+            font-weight: 600;
+            width: 180px;
+            border-radius: 4px;
+        }
+
+        /* Tablo Tasarımı */
+        .offer-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 9pt;
+            margin-bottom: 20px;
+        }
+
+            .offer-table th {
+                background-color: #2a4d69;
+                color: #ffffff;
+                padding: 10px 4px;
+                border: 1px solid #2a4d69;
+                text-transform: uppercase;
+                font-weight: 700;
+            }
+
+            .offer-table td {
+                border: 1px solid #e2e8f0;
+                padding: 6px 4px;
+                vertical-align: middle;
+            }
+
+        .sku-input, .qty-input, .price-input, .disc-input, .name-input {
+            width: 100%;
+            border: 1px solid transparent;
+            background: transparent;
+            font-family: inherit;
+            font-size: 9pt;
+            font-weight: 600;
+            padding: 4px;
+        }
+
+        .sku-input {
+            text-align: center;
+            color: #2a4d69;
+            font-weight: 700;
+        }
+
+        .qty-input, .price-input, .disc-input {
+            text-align: right;
+        }
+
+            .sku-input:focus, .qty-input:focus, .price-input:focus, .disc-input:focus, .name-input:focus {
+                background: #fff;
+                border: 1px solid #2a4d69;
+                border-radius: 4px;
+                outline: none;
+            }
+
+        .name-input {
+            font-weight: 600;
+            color: #334155;
+        }
+
+        .img-box {
+            width: 45px;
+            height: 45px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            border: 1px solid #e2e8f0;
+            border-radius: 4px;
+            background: #f8fafc;
+            position: relative;
+        }
+
+        .product-img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        .currency-select {
+            font-size: 9pt;
+            font-weight: bold;
+            border: 1px solid #cbd5e1;
+            background: #f8fafc;
+            border-radius: 4px;
+            padding: 2px;
+            width: 100%;
+            cursor: pointer;
+        }
+
+        /* Canlı Döviz Kurları ve Özet Blok Düzeni */
+        .financial-section {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 20px;
+            margin-top: 15px;
+            align-items: start;
+        }
+
+        /* Döviz Kurları Tablosu */
+        .rates-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 8.5pt;
+        }
+
+            .rates-table th {
+                background-color: #f8fafc;
+                color: #1e293b;
+                border: 1px solid #cbd5e1;
+                padding: 6px;
+                font-weight: 700;
+            }
+
+            .rates-table td {
+                border: 1px solid #e2e8f0;
+                padding: 6px;
+                text-align: center;
+            }
+
+        .rates-title-row {
+            background-color: #ffffff !important;
+            font-size: 9.5pt;
+            font-weight: bold;
+            color: #2a4d69;
+            text-align: center;
+        }
+
+        /* Alt Toplam Matrisi */
+        .summary-box {
+            border: 1px solid #2a4d69;
+            font-size: 9pt;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 7px 12px;
+            border-bottom: 1px solid #e2e8f0;
+            background: #fff;
+        }
+
+        .total-row {
+            background-color: #2a4d69;
+            color: white;
+            font-weight: bold;
+            border-top: 1px solid #2a4d69;
+        }
+
+        /* İmza Alanı Matrisi */
+        .signature-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            border: 1px solid #1e293b;
+            margin-top: 30px;
+            text-align: center;
+            font-size: 10pt;
+            font-weight: bold;
+            background-color: #ffffff;
+        }
+
+        .signature-box {
+            padding: 10px;
+        }
+
+        .signature-title {
+            border-bottom: 1px solid #1e293b;
+            padding-bottom: 8px;
+            margin-bottom: 50px;
+            background-color: #f8fafc;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Sol Sabit Kontrol Paneli */
+        .ui-buttons {
+            position: fixed;
+            left: 40px;
+            top: 100px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            z-index: 999;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            border-radius: 6px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            font-size: 10pt;
+        }
+
+        .btn-add {
+            background-color: #10b981;
+        }
+
+            .btn-add:hover {
+                background-color: #059669;
+            }
+
+        .btn-print {
+            background-color: #2563eb;
+        }
+
+            .btn-print:hover {
+                background-color: #1d4ed8;
+            }
+
+        .btn-del {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 11pt;
+        }
+
+            .btn-del:hover {
+                transform: scale(1.2);
+            }
+
+        @media print {
+            body {
+                background: none;
+                padding: 0;
+                margin: 0;
+            }
+
+            .a4-page {
+                box-shadow: none;
+                margin: 0;
+                padding: 0;
+                width: 100%;
+                min-height: auto;
+            }
+
+            .ui-buttons, .btn-del, .currency-select, .manual-icon {
+                display: none !important;
+            }
+
+            .print-only {
+                display: inline-block !important;
+                font-weight: bold;
+            }
+
+            input {
+                border: none !important;
+                background: none !important;
+                padding: 0 !important;
+            }
+
+            .offer-table th {
+                background-color: #2a4d69 !important;
+                color: #ffffff !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            .total-row {
+                background-color: #2a4d69 !important;
+                color: white !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            .signature-title {
+                background-color: #f8fafc !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            .offer-table td {
+                padding: 8px 4px;
+            }
+
+                .offer-table th:last-child, .offer-table td:last-child {
+                    display: none !important;
+                }
+        }
+
+        .print-only {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="ui-buttons">
+        <button class="btn btn-add" onclick="satirEkle()">➕ Satır Ekle</button>
+        <button class="btn btn-print" onclick="window.print()">🖨️ Yazdır / PDF</button>
+    </div>
+
+    <div class="a4-page">
+        <div class="page-content">
+            <div class="header-container">
+                <div class="logo-area">
+                    <img src="assets/arslan_logo_2.pdf.svg" alt="ARSLAN ELEKTROMARKET" class="logo-img" onerror="this.style.display='none'; document.getElementById('alt-logo-text').style.display='block';">
+                    <span id="alt-logo-text" style="display:none; font-size:20pt; font-weight:800; color:#2a4d69;">ARSLAN ELEKTROMARKET</span>
+                    <span class="company-slogan">Toptan & Perakende Elektrik Malzemeleri Ticareti</span>
+                </div>
+                <div class="title-area">
+                    <h2 class="form-title">TEKLİF FORMU</h2>
+                    <div id="lblDate" class="form-date">00.00.0000</div>
+                </div>
+            </div>
+
+            <div class="meta-container">
+                <div>
+                    <div class="meta-item"><span class="meta-label">Teklif No:</span> <span id="lblOfferNo" style="font-weight:bold; color: #2a4d69;">ARS-2026-000</span></div>
+                    <div class="meta-item"><span class="meta-label">Müşteri / Cari:</span> <input type="text" class="meta-input" style="width: 230px;" value="Şişecam Genel Tedarik"></div>
+                </div>
+                <div style="text-align: right; display: flex; flex-direction: column; align-items: flex-end;">
+                    <div class="meta-item"><span class="meta-label">USD Kuru:</span> <input type="number" step="0.0001" id="usdKur" class="meta-input" value="46.0144" onchange="updateTotals()"></div>
+                    <div class="meta-item"><span class="meta-label">EUR Kuru:</span> <input type="number" step="0.0001" id="eurKur" class="meta-input" value="53.0044" onchange="updateTotals()"></div>
+                </div>
+            </div>
+
+            <table class="offer-table">
+                <thead>
+                    <tr>
+                        <th style="width: 4%; text-align: center;">ID</th>
+                        <th style="width: 8%; text-align: center;">Görsel</th>
+                        <th style="width: 14%; text-align: center;">Kod (SKU)</th>
+                        <th style="width: 26%; text-align: left; padding-left: 8px;">Ürün Tanımı</th>
+                        <th style="width: 7%; text-align: right;">Miktar</th>
+                        <th style="width: 11%; text-align: right;">Liste Fiyatı</th>
+                        <th style="width: 7%; text-align: right;">İsk. %</th>
+                        <th style="width: 8%; text-align: center;">Döviz</th>
+                        <th style="width: 11%; text-align: right; padding-right: 8px;">Toplam Fiyat</th>
+                        <th style="width: 4%; text-align: center;">Sil</th>
+                    </tr>
+                </thead>
+                <tbody id="offerBody">
+                </tbody>
+            </table>
+
+            <div class="financial-section">
+                <table class="rates-table">
+                    <thead>
+                        <tr class="rates-title-row">
+                            <td colspan="5">GÜNCEL DÖVİZ KURLARI</td>
+                        </tr>
+                        <tr>
+                            <th>Gösterge</th>
+                            <th>Birim</th>
+                            <th>Döviz Cinsi</th>
+                            <th>Döviz Alış</th>
+                            <th>Döviz Satış</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="font-weight: 600;">🇺🇸 USD/TRY</td>
+                            <td>1</td>
+                            <td>ABD DOLARI</td>
+                            <td id="tcmb-usd-alis">46.0144</td>
+                            <td id="tcmb-usd-satis" style="font-weight: bold; color: #2a4d69;">46.0973</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 600;">🇪🇺 EUR/TRY</td>
+                            <td>1</td>
+                            <td>EURO</td>
+                            <td id="tcmb-eur-alis">53.0044</td>
+                            <td id="tcmb-eur-satis" style="font-weight: bold; color: #2a4d69;">53.0999</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="summary-box" id="summaryTable">
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <div style="font-size: 8.5pt; color: #64748b; text-align: center; border-top: 1px solid #e2e8f0; padding-top: 8px; font-style: italic;">
+                Arslan Elektromarket - Gebze / KOCAELİ<br>
+                Fiyatlarımıza KDV dahil değildir (%20 KDV eklenecektir). Teklifin geçerlilik süresi 3 iş günüdür.
+            </div>
+
+            <div class="signature-container">
+                <div class="signature-box" style="border-right: 1px solid #1e293b;">
+                    <div class="signature-title">Teklif Veren</div>
+                </div>
+                <div class="signature-box">
+                    <div class="signature-title">Müşteri Onayı</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let rowCount = 0;
+
+        window.onload = function () {
+            setBasics();
+            fetchRates();
+            satirEkle();
+        };
+
+        function setBasics() {
+            const today = new Date();
+            document.getElementById('lblDate').innerText = `${String(today.getDate()).padStart(2, '0')}.${String(today.getMonth() + 1).padStart(2, '0')}.${today.getFullYear()}`;
+            document.getElementById('lblOfferNo').innerText = `AST-${today.getFullYear()}-${Math.floor(1000 + Math.random() * 9000)}`;
+        }
+
+        async function fetchRates() {
+            try {
+                const response = await fetch('https://localhost:7256/api/offer/rates');
+                if (response.ok) {
+                    const rates = await response.json();
+
+                    document.getElementById('usdKur').value = rates.USD.toFixed(4);
+                    document.getElementById('eurKur').value = rates.EUR.toFixed(4);
+
+                    document.getElementById('tcmb-usd-satis').innerText = rates.USD.toFixed(4);
+                    document.getElementById('tcmb-usd-alis').innerText = (rates.USD - 0.08).toFixed(4);
+                    document.getElementById('tcmb-eur-satis').innerText = rates.EUR.toFixed(4);
+                    document.getElementById('tcmb-eur-alis').innerText = (rates.EUR - 0.09).toFixed(4);
+
+                    updateTotals();
+                }
+            } catch (e) { console.warn(".NET 10 TCMB Servisi yerel kurları bağladı."); }
+        }
+
+        function satirEkle() {
+            rowCount++;
+            const tbody = document.getElementById('offerBody');
+            const tr = document.createElement('tr');
+            tr.id = `row_${rowCount}`;
+            tr.className = "offer-row";
+
+            tr.innerHTML = `
+                    <td class="text-center row-id" style="font-weight:bold; color: #64748b;">${rowCount}</td>
+                    <td><div class="img-box"><img src="" class="product-img" style="display:none;"><span class="manual-icon" style="font-size:7pt;font-weight:bold;color:#cbd5e1;">Manuel</span></div></td>
+                    <td><input type="text" class="sku-input" placeholder="Kod" onblur="fetchProduct(this)"></td>
+                    <td><input type="text" class="name-input" value="Ürün adı giriniz..."></td>
+                    <td><input type="number" class="qty-input" value="1" oninput="calcRow(this)"></td>
+                    <td><input type="number" class="price-input" value="0.00" step="0.01" oninput="calcRow(this)"></td>
+                    <td><input type="number" class="disc-input" value="0" min="0" max="100" oninput="calcRow(this)"></td>
+                    <td class="text-center">
+                        <select class="currency-select" onchange="calcRow(this)">
+                            <option value="TL">TL</option>
+                            <option value="USD">USD</option>
+                            <option value="EUR">EUR</option>
+                        </select>
+                        <span class="print-only">TL</span>
+                    </td>
+                    <td class="text-right row-total" style="font-weight:bold; padding-right:8px;">0.00</td>
+                    <td class="text-center">
+                        <button class="btn-del" onclick="satirSil('${tr.id}')">❌</button>
+                    </td>
+                `;
+            tbody.appendChild(tr);
+            renumberRows();
+            updateTotals();
+        }
+
+        function satirSil(rowId) {
+            const row = document.getElementById(rowId);
+            if (row) {
+                row.remove();
+                renumberRows();
+                updateTotals();
+            }
+        }
+
+        function renumberRows() {
+            document.querySelectorAll('.offer-row').forEach((row, index) => {
+                row.querySelector('.row-id').innerText = index + 1;
+            });
+        }
+
+        async function fetchProduct(input) {
+            const row = input.closest('tr');
+            const sku = input.value.trim();
+            if (!sku) return;
+
+            input.style.backgroundColor = "#FEF08A";
+
+            try {
+                const res = await fetch(`https://localhost:7256/api/offer/product/${sku}`);
+                if (res.ok) {
+                    const p = await res.json();
+                    input.style.backgroundColor = "transparent";
+
+                    row.querySelector('.name-input').value = p.productName;
+                    row.querySelector('.price-input').value = p.unitPrice.toFixed(2);
+                    row.querySelector('.currency-select').value = p.currency ? p.currency.toUpperCase() : "TL";
+                    row.querySelector('.disc-input').value = p.discountPercent || 0;
+                    row.querySelector('.manual-icon').style.display = 'none';
+
+                    const img = row.querySelector('.product-img');
+                    if (p.imageUrl) {
+                        img.src = p.imageUrl; img.style.display = 'block';
+                    } else {
+                        img.style.display = 'none';
+                    }
+                    calcRow(row.querySelector('.qty-input'));
+                } else {
+                    input.style.backgroundColor = "#FEE2E2";
+                    row.querySelector('.name-input').value = "";
+                    row.querySelector('.manual-icon').style.display = 'block';
+                    row.querySelector('.product-img').style.display = 'none';
+                }
+            } catch (e) {
+                input.style.backgroundColor = "#FEE2E2";
+            }
+        }
+
+        function calcRow(el) {
+            const row = el.closest('tr');
+            const q = parseFloat(row.querySelector('.qty-input').value) || 0;
+            const p = parseFloat(row.querySelector('.price-input').value) || 0;
+            const d = parseFloat(row.querySelector('.disc-input').value) || 0;
+
+            const total = q * (p * (1 - d / 100));
+            row.querySelector('.row-total').innerText = total.toFixed(2);
+            row.querySelector('.print-only').innerText = row.querySelector('.currency-select').value;
+            updateTotals();
+        }
+
+        function updateTotals() {
+            let sums = { "TL": 0, "USD": 0, "EUR": 0 };
+            document.querySelectorAll('.offer-row').forEach(row => {
+                const cur = row.querySelector('.currency-select').value.toUpperCase();
+                const tot = parseFloat(row.querySelector('.row-total').innerText) || 0;
+                sums[cur] += tot;
+            });
+
+            const u = parseFloat(document.getElementById('usdKur').value) || 1;
+            const e = parseFloat(document.getElementById('eurKur').value) || 1;
+
+            document.getElementById('tcmb-usd-satis').innerText = u.toFixed(4);
+            document.getElementById('tcmb-eur-satis').innerText = e.toFixed(4);
+
+            let grandTLHariç = sums["TL"] + (sums["USD"] * u) + (sums["EUR"] * e);
+            const box = document.getElementById('summaryTable');
+            box.innerHTML = "";
+
+            for (let [c, val] of Object.entries(sums)) {
+                if (val > 0) {
+                    let sym = c === "USD" ? "$" : (c === "EUR" ? "€" : "TL");
+                    box.innerHTML += `
+                            <div class="summary-row" style="background:#f8fafc; font-weight:bold; color:#2a4d69; text-transform:uppercase;"><span>${c} HESABI</span><span></span></div>
+                            <div class="summary-row"><span>Ara Toplam (${sym}):</span><span>${val.toFixed(2)} ${sym}</span></div>
+                            <div class="summary-row"><span>KDV (%20) (${sym}):</span><span>${(val * 0.2).toFixed(2)} ${sym}</span></div>
+                            <div class="summary-row" style="font-weight:600; color:#10b981;"><span>Toplam (${sym} + KDV):</span><span>${(val * 1.2).toFixed(2)} ${sym}</span></div>
+                        `;
+                }
+            }
+
+            box.innerHTML += `
+                    <div class="summary-row" style="font-weight:600; border-top:2px solid #2a4d69;"><span>GENEL TOPLAM (KDV HARİÇ):</span><span>${grandTLHariç.toFixed(2)} TL</span></div>
+                    <div class="summary-row" style="font-weight:600;"><span>TOPLAM KDV (%20):</span><span>${(grandTLHariç * 0.2).toFixed(2)} TL</span></div>
+                    <div class="summary-row total-row"><span>TEKLİF GENEL TOPLAMI (KDV DAHİL):</span><span>${(grandTLHariç * 1.2).toFixed(2)} TL</span></div>
+                `;
+        }
+    </script>
+</body>
+</html>

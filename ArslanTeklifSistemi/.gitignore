@@ -1,0 +1,15 @@
+﻿# .NET / C#
+bin/
+obj/
+.vs/
+.vscode/
+
+# Ayarlar ve Şifreler
+appsettings.json
+appsettings.Development.json
+*.user
+*.lock
+
+# Sistem dosyaları
+.DS_Store
+Thumbs.db
